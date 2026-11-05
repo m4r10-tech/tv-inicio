@@ -17,7 +17,7 @@
   var fs = require('fs');
   var crypto = require('crypto');
 
-  var VERSION = '0.1.0';
+  var VERSION = '0.2.0';
   var MODULE = nombreModulo();
   var PORT = 8090;
   var CONFIG_FILE = '/home/owner/share/tv-inicio.json';
@@ -394,12 +394,11 @@
       res.on('data', function (c) { chunks.push(c); });
       res.on('end', function () {
         var html = Buffer.concat(chunks).toString('utf8');
-        if (html.indexOf('<!doctype html>') === 0) { panelHtml = html; log('panel cargado'); }
-        else { log('panel: respuesta inesperada'); setTimeout(cargarPanel, 30000); }
+        if (html.indexOf('<!doctype html>') === 0) { if (html !== panelHtml) log('panel cargado'); panelHtml = html; }
+        else log('panel: respuesta inesperada');
       });
     }).on('error', function (e) {
       log('panel: no se pudo cargar:', e.message);
-      setTimeout(cargarPanel, 30000);
     });
   }
 
@@ -557,6 +556,19 @@
         return tecla(b.key, function (r) { enviar(res, 200, r); });
       }
       if (ruta === '/api/abrir') return abrir(String(b.id), function (r) { enviar(res, 200, r); });
+      if (ruta === '/api/password') {
+        if (typeof b.actual !== 'string' || !igual(hashPass(b.actual, config.pass.salt), config.pass.hash)) {
+          return enviar(res, 403, { ok: false, motivo: 'actual' });
+        }
+        if (typeof b.nueva !== 'string' || b.nueva.length < 8) return enviar(res, 400, { ok: false, motivo: 'corta' });
+        var sal = crypto.randomBytes(16).toString('hex');
+        config.pass = { salt: sal, hash: hashPass(b.nueva, sal) };
+        config.sessions = {};   // se cierran todas las sesiones, también las de otros aparatos
+        saveConfig();
+        log('panel: contraseña cambiada');
+        nuevaSesion(res);
+        return enviar(res, 200, { ok: true });
+      }
       if (ruta === '/api/apagar') return apagar(function (r) { enviar(res, 200, r); });
       if (ruta === '/api/modo') { config.night = !!b.night; saveConfig(); return enviar(res, 200, { ok: true }); }
       if (ruta === '/api/temporizador') {
@@ -622,7 +634,7 @@
   if (config.timer && config.timer.end < Date.now()) { config.timer = null; saveConfig(); }
   server.listen(PORT, '0.0.0.0', function () { log('tv-inicio ' + VERSION + ' (' + MODULE + ') escuchando en :' + PORT); });
   cargarPanel();
-  setInterval(cargarPanel, 30 * 60000);
+  setInterval(cargarPanel, 60000);
   leerApps();
   setInterval(leerApps, 5 * 60000);
   leerAlmacenamiento();

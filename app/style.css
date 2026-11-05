@@ -1,10 +1,10 @@
 /* tv-inicio · pantalla de inicio. Pensado para el navegador de Tizen 4 (Chromium de 2017):
    sin grid, sin gap en flex, sin inset ni backdrop-filter. */
 
-@font-face { font-family: "Plex"; font-weight: 300; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-300-normal.woff2") format("woff2"); }
-@font-face { font-family: "Plex"; font-weight: 400; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Plex"; font-weight: 500; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); }
-@font-face { font-family: "Plex"; font-weight: 600; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Plex"; font-weight: 300; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-300-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Plex"; font-weight: 400; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Plex"; font-weight: 500; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Plex"; font-weight: 600; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); font-display: swap; }
 
 html, body {
   margin: 0;

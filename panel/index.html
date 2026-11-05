@@ -2,65 +2,162 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>Tele · panel</title>
+<meta name="theme-color" content="#0f0f0f">
+<title>Inicio · panel de la tele</title>
 <style>
-@font-face { font-family: "Plex"; font-weight: 400; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); }
-@font-face { font-family: "Plex"; font-weight: 500; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Plex"; font-weight: 400; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-400-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Plex"; font-weight: 500; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-500-normal.woff2") format("woff2"); font-display: swap; }
+@font-face { font-family: "Plex"; font-weight: 600; src: url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-sans@5.2.5/files/ibm-plex-sans-latin-600-normal.woff2") format("woff2"); font-display: swap; }
 :root {
-  --bg: #111111;
-  --surface: #1b1b1b;
-  --surface-2: #262626;
-  --line: #333333;
+  --bg: #0f0f0f;
+  --side: #141414;
+  --surface: #1a1a1a;
+  --surface-2: #232323;
+  --surface-3: #2c2c2c;
+  --line: #2a2a2a;
   --text: #ededed;
   --muted: #9a9a9a;
+  --faint: #6d6d6d;
   --red: #d52b1e;
-  --ok: #3f8f5a;
+  --ok: #4c9a63;
+  --radius: 14px;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; }
+html, body { margin: 0; height: 100%; }
 body {
   background: var(--bg);
   color: var(--text);
   font: 400 15px/1.45 "Plex", system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
-main { max-width: 520px; margin: 0 auto; padding: 16px 16px 48px; }
-header { display: flex; justify-content: space-between; align-items: center; padding: 8px 0 16px; }
-h1 { margin: 0; font-size: 20px; font-weight: 500; }
-h2 { margin: 0 0 12px; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
-.section { border-top: 1px solid var(--line); padding: 16px 0; }
+svg.i { width: 20px; height: 20px; flex: none; }
+button, select, input { font: inherit; color: var(--text); }
+button {
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background .12s, transform .06s;
+}
+button:hover { background: var(--surface-3); }
+button:active { transform: scale(.97); }
+button.primary { background: #ededed; color: #111; border-color: #ededed; }
+button.primary:hover { background: #fff; }
+button.danger { background: var(--red); border-color: var(--red); color: #fff; }
+button.ghost { background: transparent; }
+input, select {
+  width: 100%; min-height: 44px; padding: 0 12px;
+  border-radius: 10px; border: 1px solid var(--line); background: var(--surface-2);
+}
+:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+[hidden] { display: none !important; }
 .muted { color: var(--muted); }
 .small { font-size: 13px; }
-button, select, input {
-  font: inherit;
-  color: var(--text);
-  background: var(--surface-2);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  min-height: 44px;
+
+/* ---------- Login ---------- */
+.login-wrap { min-height: 100%; display: flex; align-items: center; justify-content: center; padding: 24px 16px; }
+.login {
+  width: 100%; max-width: 380px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 20px;
+  padding: 28px 24px; display: flex; flex-direction: column; gap: 12px;
 }
-button { padding: 0 14px; cursor: pointer; font-weight: 500; }
-button:hover { background: #2f2f2f; }
-button:focus-visible, input:focus-visible, select:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-button.primary { background: #ededed; color: #111; border-color: #ededed; }
-button.danger { background: var(--red); border-color: var(--red); color: #fff; }
-button.small { min-height: 32px; font-size: 13px; }
-input, select { width: 100%; padding: 0 12px; }
-.row { display: flex; gap: 8px; }
-.row > * { flex: 1 1 0; }
-.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.dpad { display: grid; grid-template-columns: repeat(3, 60px); grid-template-rows: repeat(3, 60px); gap: 6px; justify-content: center; margin: 4px 0 12px; }
-.dpad button { padding: 0; min-height: 0; font-size: 18px; }
-.dpad .ok { border-radius: 50%; background: #ededed; color: #111; }
-.stat { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid #222; }
-.stat:last-child { border-bottom: 0; }
-.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--ok); margin-right: 8px; }
-.dot.off { background: #666; }
-.toggle { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid #222; }
-.toggle:last-child { border-bottom: 0; }
-.sub { display: block; font-size: 12px; color: var(--muted); }
+.brand { display: flex; align-items: center; gap: 12px; }
+.mark {
+  width: 40px; height: 40px; border-radius: 11px; background: #ededed; color: #111;
+  display: flex; align-items: center; justify-content: center; flex: none;
+}
+.mark svg { width: 22px; height: 22px; }
+.brand-name { font-weight: 600; font-size: 17px; line-height: 1.2; }
+.brand-sub { font-size: 12px; color: var(--muted); }
+.login h1 { margin: 12px 0 0; font-size: 22px; font-weight: 600; }
+.err { color: #ff8a80; min-height: 20px; font-size: 14px; }
+
+/* ---------- Estructura ---------- */
+.layout { display: grid; grid-template-columns: 248px 1fr; min-height: 100%; }
+.side {
+  position: sticky; top: 0; height: 100vh;
+  background: var(--side); border-right: 1px solid var(--line);
+  display: flex; flex-direction: column; padding: 20px 14px;
+}
+.side .brand { padding: 0 6px 22px; }
+.nav { display: flex; flex-direction: column; gap: 2px; }
+.nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 12px; border-radius: 10px;
+  color: var(--muted); text-decoration: none; font-weight: 500;
+}
+.nav a:hover { background: var(--surface); color: var(--text); }
+.nav a.on { background: var(--surface-2); color: var(--text); }
+.side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid var(--line); }
+.side-foot button { justify-content: flex-start; }
+
+.pill { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 3px rgba(76,154,99,.18); }
+.dot.off { background: #666; box-shadow: none; }
+
+main { min-width: 0; padding: 28px 36px 48px; max-width: 980px; }
+.head { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; margin-bottom: 22px; }
+.head h1 { margin: 0; font-size: 30px; font-weight: 600; letter-spacing: -.01em; }
+.head p { margin: 4px 0 0; color: var(--muted); }
+.mobile-top { display: none; }
+.tabs { display: none; }
+
+/* ---------- Bloques ---------- */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; min-width: 0; }
+.card h3 { margin: 0 0 6px; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.big { font-size: 22px; font-weight: 600; line-height: 1.25; }
+.bar { height: 6px; border-radius: 3px; background: var(--surface-3); overflow: hidden; margin-top: 10px; }
+.bar span { display: block; height: 100%; background: #ededed; border-radius: 3px; }
+.group { margin-top: 26px; }
+.group > h2 { margin: 0 0 10px; font-size: 12px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+.btns { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+.tile {
+  position: relative; min-height: 64px; justify-content: flex-start; padding: 0 14px;
+  background: var(--surface); border-radius: 12px;
+}
+.tile .lk { position: absolute; top: 8px; right: 8px; width: 18px; height: 18px; border-radius: 9px; background: var(--red); display: none; align-items: center; justify-content: center; }
+.tile .lk svg { width: 10px; height: 10px; }
+.tile.locked .lk { display: flex; }
+.tile.locked { color: var(--muted); }
+.list { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .sub { display: block; font-size: 12px; color: var(--muted); }
+
+/* Mando */
+.remote { max-width: 360px; margin: 0 auto; display: flex; flex-direction: column; gap: 18px; }
+.dpad { position: relative; width: 240px; height: 240px; margin: 0 auto; border-radius: 50%; background: var(--surface); border: 1px solid var(--line); }
+.dpad button { position: absolute; width: 72px; height: 72px; min-height: 0; padding: 0; border: 0; background: transparent; border-radius: 50%; }
+.dpad button:hover { background: var(--surface-3); }
+.dpad .up { top: 4px; left: 84px; } .dpad .down { bottom: 4px; left: 84px; }
+.dpad .left { left: 4px; top: 84px; } .dpad .right { right: 4px; top: 84px; }
+.dpad .ok { top: 70px; left: 70px; width: 100px; height: 100px; background: #ededed; color: #111; font-weight: 600; }
+.dpad .ok:hover { background: #fff; }
+.trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.rocker { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.rocker > div { display: flex; flex-direction: column; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 6px; }
+.rocker span { text-align: center; font-size: 12px; color: var(--muted); }
+.rocker button { background: var(--surface-2); }
+
+/* Temporizador */
+.presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.presets button.on { background: #ededed; color: #111; border-color: #ededed; }
+.fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+input[type=number] { -moz-appearance: textfield; appearance: textfield; }
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+label.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
+.countdown { font-size: 44px; font-weight: 600; letter-spacing: -.02em; line-height: 1.1; }
+
+/* Interruptor */
 .switch { position: relative; width: 48px; height: 28px; flex: none; }
 .switch input { position: absolute; opacity: 0; width: 0; height: 0; min-height: 0; }
 .switch span { position: absolute; inset: 0; border-radius: 14px; background: #3a3a3a; transition: background .15s; cursor: pointer; }
@@ -68,132 +165,284 @@ input, select { width: 100%; padding: 0 12px; }
 .switch input:checked + span { background: var(--red); }
 .switch input:checked + span::after { transform: translateX(20px); }
 .switch input:focus-visible + span { outline: 2px solid #fff; outline-offset: 2px; }
-label.field { display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: var(--muted); }
-.login { max-width: 360px; margin: 12vh auto 0; display: flex; flex-direction: column; gap: 12px; }
-.login h1 { margin-bottom: 4px; }
-.err { color: #ff8a80; min-height: 20px; font-size: 14px; }
+.switch.neutral input:checked + span { background: #ededed; }
+.switch.neutral input:checked + span::after { background: #111; }
+
+.form { display: flex; flex-direction: column; gap: 10px; max-width: 420px; }
+pre { margin: 0; white-space: pre-wrap; word-break: break-all; font-size: 11px; color: var(--muted); max-height: 360px; overflow: auto; }
+details summary { cursor: pointer; padding: 12px 16px; font-weight: 500; }
+details[open] summary { border-bottom: 1px solid var(--line); }
+details pre { padding: 12px 16px; }
+.note { font-size: 13px; color: var(--muted); margin: 10px 2px 0; line-height: 1.5; }
+
 .toast {
-  position: fixed; left: 50%; bottom: 20px; transform: translate(-50%, 90px);
-  background: #ededed; color: #111; padding: 10px 16px; border-radius: 10px; font-size: 14px;
-  transition: transform .25s ease; z-index: 10; max-width: calc(100% - 32px);
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 120px);
+  background: #ededed; color: #111; padding: 11px 16px; border-radius: 10px; font-size: 14px; font-weight: 500;
+  transition: transform .25s ease; z-index: 30; max-width: calc(100% - 32px); box-shadow: 0 8px 24px rgba(0,0,0,.4);
 }
 .toast.show { transform: translate(-50%, 0); }
-details summary { cursor: pointer; color: var(--muted); }
-pre { white-space: pre-wrap; word-break: break-all; font-size: 11px; color: var(--muted); max-height: 320px; overflow: auto; background: var(--surface); padding: 10px; border-radius: 8px; }
-[hidden] { display: none !important; }
+
+/* ---------- Móvil ---------- */
+@media (max-width: 760px) {
+  .layout { display: block; }
+  .side { display: none; }
+  main { padding: 0 16px calc(96px + env(safe-area-inset-bottom)); }
+  .mobile-top {
+    display: flex; justify-content: space-between; align-items: center;
+    position: sticky; top: 0; z-index: 10; background: rgba(15,15,15,.92);
+    padding: 14px 0 12px; margin-bottom: 6px; border-bottom: 1px solid var(--line);
+  }
+  .mobile-top .brand-name { font-size: 15px; }
+  .mobile-top .mark { width: 32px; height: 32px; border-radius: 9px; }
+  .mobile-top .mark svg { width: 18px; height: 18px; }
+  .head { margin: 14px 0 16px; }
+  .head h1 { font-size: 26px; }
+  .head .pill { display: none; }
+  .tabs {
+    display: grid; grid-template-columns: repeat(6, 1fr);
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 20;
+    background: rgba(20,20,20,.97); border-top: 1px solid var(--line);
+    padding: 6px 4px calc(6px + env(safe-area-inset-bottom));
+  }
+  .tabs a {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 6px 0; border-radius: 10px; color: var(--faint); text-decoration: none; font-size: 10.5px; font-weight: 500;
+  }
+  .tabs a.on { color: var(--text); background: var(--surface-2); }
+  .cards { grid-template-columns: 1fr 1fr; }
+  .card.wide { grid-column: 1 / -1; }
+  .btns { grid-template-columns: 1fr 1fr; }
+}
 </style>
 </head>
 <body>
 
-<form class="login" id="login" hidden>
-  <h1>Tele</h1>
-  <p class="muted" id="loginMsg">Inicia sesión para manejar la tele.</p>
-  <input id="user" value="admin" autocomplete="username" aria-label="Usuario">
-  <input id="pass" type="password" autocomplete="current-password" placeholder="Contraseña" aria-label="Contraseña">
-  <button class="primary" type="submit" id="loginBtn">Entrar</button>
-  <div class="err" id="loginErr"></div>
-</form>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-tv" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="4.5" width="19" height="12.5" rx="2"/><path d="M8 20.5h8"/></g></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M4 10.5 12 4l8 6.5V20h-5.5v-5.5h-5V20H4z"/></symbol>
+  <symbol id="i-remote" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="7" y="2.5" width="10" height="19" rx="3"/><circle cx="12" cy="8.5" r="2"/><path d="M10 14h.01M14 14h.01M10 17.5h.01M14 17.5h.01"/></g></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></g></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></g></symbol>
+  <symbol id="i-lockf" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="3" d="M7.5 10V8a4.5 4.5 0 0 1 9 0v2"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.7 7.7 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.7 7.7 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.7 7.7 0 0 0 2.6-1.5l2.4 1 2-3.4-2-1.6Z"/></g></symbol>
+  <symbol id="i-power" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v8.5"/><path d="M6.6 6.5a8 8 0 1 0 10.8 0"/></g></symbol>
+  <symbol id="i-out" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4.5a1.5 1.5 0 0 1 1.5 1.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M10 8l-4 4 4 4M6 12h10"/></g></symbol>
+  <symbol id="i-up" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="m6 14.5 6-6 6 6"/></symbol>
+</svg>
 
-<main id="app" hidden>
-  <header>
-    <h1>Tele</h1>
-    <button class="small" id="logout">Salir</button>
-  </header>
-
-  <div class="section">
-    <h2>Estado</h2>
-    <div class="stat"><span><span class="dot" id="dot"></span><span id="estado">Conectando…</span></span><span class="muted small" id="version"></span></div>
-    <div class="stat"><span>Espacio libre</span><span id="espacio" class="muted">—</span></div>
-    <div class="stat"><span>Mando</span><span id="mando" class="muted">—</span></div>
-    <div class="stat"><span>En marcha</span><span id="running" class="muted small" style="text-align:right"></span></div>
-  </div>
-
-  <div class="section">
-    <h2>Encendido</h2>
-    <div class="row">
-      <button class="danger" id="apagar">Apagar</button>
-      <button id="modo">Cambiar a día</button>
+<div class="login-wrap" id="loginView" hidden>
+  <form class="login" id="login">
+    <div class="brand">
+      <div class="mark"><svg><use href="#i-tv"/></svg></div>
+      <div><div class="brand-name">Inicio</div><div class="brand-sub">Samsung UE40NU7125</div></div>
     </div>
-    <p class="muted small">Para encender la tele, usa el mando o Wake-on-LAN (la tele lo tiene activado).</p>
-  </div>
+    <h1 id="loginTitle">Iniciar sesión</h1>
+    <p class="muted small" id="loginMsg" style="margin:0">Panel de control de la tele.</p>
+    <input id="user" value="admin" autocomplete="username" aria-label="Usuario">
+    <input id="pass" type="password" autocomplete="current-password" placeholder="Contraseña" aria-label="Contraseña">
+    <button class="primary" type="submit" id="loginBtn">Entrar</button>
+    <div class="err" id="loginErr"></div>
+  </form>
+</div>
 
-  <div class="section">
-    <h2>Mando</h2>
-    <div class="dpad">
-      <span></span><button data-key="KEY_UP" aria-label="Arriba">▲</button><span></span>
-      <button data-key="KEY_LEFT" aria-label="Izquierda">◀</button><button class="ok" data-key="KEY_ENTER">OK</button><button data-key="KEY_RIGHT" aria-label="Derecha">▶</button>
-      <span></span><button data-key="KEY_DOWN" aria-label="Abajo">▼</button><span></span>
+<div class="layout" id="appView" hidden>
+  <aside class="side">
+    <div class="brand">
+      <div class="mark"><svg><use href="#i-tv"/></svg></div>
+      <div><div class="brand-name">Inicio</div><div class="brand-sub">Samsung UE40NU7125</div></div>
     </div>
-    <div class="grid3">
-      <button data-key="KEY_RETURN">Atrás</button>
-      <button data-open="inicio">Inicio</button>
-      <button data-key="KEY_HOME">Samsung</button>
-      <button data-key="KEY_VOLDOWN">Vol −</button>
-      <button data-key="KEY_MUTE">Silencio</button>
-      <button data-key="KEY_VOLUP">Vol +</button>
-      <button data-key="KEY_CHDOWN">Canal −</button>
-      <button data-key="KEY_SOURCE">Fuente</button>
-      <button data-key="KEY_CHUP">Canal +</button>
+    <nav class="nav" id="nav"></nav>
+    <div class="side-foot">
+      <span class="pill"><span class="dot" data-dot></span><span data-estado>Conectando…</span></span>
+      <button class="ghost" data-logout><svg class="i"><use href="#i-out"/></svg>Cerrar sesión</button>
     </div>
-  </div>
+  </aside>
 
-  <div class="section">
-    <h2>Abrir</h2>
-    <div class="grid3">
-      <button data-open="youtube">YouTube</button>
-      <button data-open="11101200001">Netflix</button>
-      <button data-open="3201512006785">Prime</button>
-      <button data-open="tv">TV</button>
-      <button data-open="org.tizen.browser">Navegador</button>
-      <button data-open="inicio">Inicio</button>
-      <button data-open="hdmi1">Consola</button>
-      <button data-open="hdmi2">HDMI 2</button>
-      <button data-open="hdmi3">HDMI 3</button>
+  <main>
+    <div class="mobile-top">
+      <div class="brand">
+        <div class="mark"><svg><use href="#i-tv"/></svg></div>
+        <div class="brand-name">Inicio</div>
+      </div>
+      <span class="pill"><span class="dot" data-dot></span><span data-estado>Conectando…</span></span>
     </div>
-    <div class="row" style="margin-top:8px">
-      <select id="otraApp" aria-label="Otra app" style="flex:3"></select>
-      <button id="abrirOtra">Abrir</button>
-    </div>
-  </div>
 
-  <div class="section">
-    <h2>Temporizador de apagado</h2>
-    <div class="row" style="margin-bottom:8px">
-      <label class="field">Horas<input type="number" id="tH" min="0" max="23" value="1" inputmode="numeric"></label>
-      <label class="field">Minutos<input type="number" id="tM" min="0" max="59" value="30" inputmode="numeric"></label>
-    </div>
-    <div class="toggle">
-      <span>Avisar en la tele<span class="sub">Un minuto antes sale un aviso para alargarlo. Apagado: se apaga sin avisar.</span></span>
-      <label class="switch"><input type="checkbox" id="tNotify" checked><span></span></label>
-    </div>
-    <div class="row" style="margin-top:8px">
-      <button class="primary" id="tStart">Activar</button>
-      <button id="tCancel">Cancelar</button>
-    </div>
-    <p class="muted small" id="tLeft"></p>
-  </div>
+    <!-- Resumen -->
+    <section data-sec="resumen">
+      <div class="head"><div><h1>Resumen</h1><p>Cómo está la tele ahora mismo.</p></div><span class="pill"><span class="dot" data-dot></span><span data-estado></span></span></div>
+      <div class="cards">
+        <div class="card"><h3>Tele</h3><div class="big" id="cEstado">—</div><div class="muted small" id="cVersion"></div></div>
+        <div class="card"><h3>Espacio libre</h3><div class="big" id="cEspacio">—</div><div class="bar"><span id="cBarra" style="width:0"></span></div></div>
+        <div class="card"><h3>Temporizador</h3><div class="big" id="cTimer">Sin temporizador</div><div class="muted small" id="cTimerSub"></div></div>
+        <div class="card"><h3>Aspecto</h3><div class="big" id="cModo">—</div><div class="muted small">Modo de la pantalla de inicio</div></div>
+      </div>
+      <div class="group">
+        <h2>Accesos rápidos</h2>
+        <div class="btns">
+          <button class="tile" data-open="inicio"><svg class="i"><use href="#i-home"/></svg>Inicio</button>
+          <button class="tile" data-open="youtube"><svg class="i"><use href="#i-tv"/></svg>YouTube<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="11101200001"><svg class="i"><use href="#i-tv"/></svg>Netflix<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile danger" data-power><svg class="i"><use href="#i-power"/></svg><span>Apagar</span></button>
+        </div>
+      </div>
+      <div class="group">
+        <h2>En marcha en la tele</h2>
+        <div class="list"><div class="row"><span class="muted small" id="cRunning">—</span></div></div>
+      </div>
+    </section>
 
-  <div class="section">
-    <h2>Control parental</h2>
-    <p class="muted small">Lo bloqueado no se abre desde Inicio ni desde aquí. Si una app bloqueada se abre por otro camino, la tele vuelve a Inicio. Las fuentes HDMI solo se bloquean en Inicio y en el panel (el botón Fuente del mando no lo respeta).</p>
-    <div id="locks"></div>
-  </div>
+    <!-- Mando -->
+    <section data-sec="mando" hidden>
+      <div class="head"><div><h1>Mando</h1><p>Como el mando de verdad.</p></div><span class="pill"><span class="dot" data-dot></span><span data-estado></span></span></div>
+      <div class="remote">
+        <div class="trio">
+          <button data-power><svg class="i"><use href="#i-power"/></svg><span>Apagar</span></button>
+          <button data-key="KEY_SOURCE">Fuente</button>
+          <button data-key="KEY_MENU"><svg class="i"><use href="#i-gear"/></svg>Menú</button>
+        </div>
+        <div class="dpad">
+          <button class="up" data-key="KEY_UP" aria-label="Arriba"><svg class="i"><use href="#i-up"/></svg></button>
+          <button class="left" data-key="KEY_LEFT" aria-label="Izquierda"><svg class="i" style="transform:rotate(-90deg)"><use href="#i-up"/></svg></button>
+          <button class="ok" data-key="KEY_ENTER">OK</button>
+          <button class="right" data-key="KEY_RIGHT" aria-label="Derecha"><svg class="i" style="transform:rotate(90deg)"><use href="#i-up"/></svg></button>
+          <button class="down" data-key="KEY_DOWN" aria-label="Abajo"><svg class="i" style="transform:rotate(180deg)"><use href="#i-up"/></svg></button>
+        </div>
+        <div class="trio">
+          <button data-key="KEY_RETURN">Atrás</button>
+          <button data-open="inicio"><svg class="i"><use href="#i-home"/></svg>Inicio</button>
+          <button data-key="KEY_HOME">Samsung</button>
+        </div>
+        <div class="rocker">
+          <div><span>Volumen</span><button data-key="KEY_VOLUP">+</button><button data-key="KEY_MUTE">Silencio</button><button data-key="KEY_VOLDOWN">−</button></div>
+          <div><span>Canal</span><button data-key="KEY_CHUP">+</button><button data-key="KEY_INFO">Info</button><button data-key="KEY_CHDOWN">−</button></div>
+        </div>
+        <div class="trio">
+          <button data-key="KEY_REWIND">« Atrasar</button>
+          <button data-key="KEY_PLAY">Reproducir</button>
+          <button data-key="KEY_FF">Adelantar »</button>
+        </div>
+      </div>
+    </section>
 
-  <div class="section">
-    <details id="diag">
-      <summary>Diagnóstico</summary>
-      <pre id="log">…</pre>
-    </details>
-  </div>
-</main>
+    <!-- Apps -->
+    <section data-sec="apps" hidden>
+      <div class="head"><div><h1>Apps</h1><p>Abre algo en la tele sin levantarte.</p></div><span class="pill"><span class="dot" data-dot></span><span data-estado></span></span></div>
+      <div class="group" style="margin-top:0">
+        <h2>Accesos</h2>
+        <div class="btns">
+          <button class="tile" data-open="inicio"><svg class="i"><use href="#i-home"/></svg>Inicio</button>
+          <button class="tile" data-open="youtube">YouTube<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="11101200001">Netflix<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="3201512006785">Prime Video<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="org.tizen.browser">Navegador<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="tv">TV<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Fuentes</h2>
+        <div class="btns">
+          <button class="tile" data-open="hdmi1">Consola<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="hdmi2">HDMI 2<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+          <button class="tile" data-open="hdmi3">HDMI 3<span class="lk"><svg><use href="#i-lockf"/></svg></span></button>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Todas las apps</h2>
+        <div class="btns" id="todas"></div>
+      </div>
+    </section>
 
-<div class="toast" id="toast"></div>
+    <!-- Temporizador -->
+    <section data-sec="temporizador" hidden>
+      <div class="head"><div><h1>Temporizador</h1><p>Apaga la tele sola cuando quieras.</p></div><span class="pill"><span class="dot" data-dot></span><span data-estado></span></span></div>
+      <div class="cards">
+        <div class="card wide">
+          <h3>Ahora</h3>
+          <div class="countdown" id="tCount">Sin temporizador</div>
+          <div class="muted small" id="tSub">Elige un tiempo abajo.</div>
+          <div style="margin-top:12px" id="tCancelWrap" hidden><button id="tCancel">Cancelar temporizador</button></div>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Apagar dentro de</h2>
+        <div class="presets" id="presets">
+          <button data-min="15">15 min</button><button data-min="30">30 min</button><button data-min="45">45 min</button>
+          <button data-min="60">1 h</button><button data-min="90">1 h 30</button><button data-min="120">2 h</button>
+        </div>
+        <div class="fields" style="margin-top:8px">
+          <label class="field">Horas<input type="number" id="tH" min="0" max="23" value="1" inputmode="numeric"></label>
+          <label class="field">Minutos<input type="number" id="tM" min="0" max="59" value="30" inputmode="numeric"></label>
+        </div>
+      </div>
+      <div class="group">
+        <div class="list">
+          <div class="row">
+            <span>Avisar en la tele<span class="sub">Un minuto antes sale un aviso para alargar 15 min. Apagado: se apaga sin avisar.</span></span>
+            <label class="switch"><input type="checkbox" id="tNotify" checked><span></span></label>
+          </div>
+        </div>
+        <button class="primary" id="tStart" style="margin-top:12px;width:100%">Activar temporizador</button>
+      </div>
+    </section>
+
+    <!-- Control parental -->
+    <section data-sec="parental" hidden>
+      <div class="head"><div><h1>Control parental</h1><p>Bloquea apps y fuentes.</p></div><span class="pill"><span class="dot" data-dot></span><span data-estado></span></span></div>
+      <div class="group" style="margin-top:0"><h2>Fuentes</h2><div class="list" id="lockFuentes"></div></div>
+      <div class="group"><h2>Apps</h2><div class="list" id="lockApps"></div></div>
+      <p class="note">Lo bloqueado no se abre desde Inicio ni desde este panel. Si una app bloqueada se abre por otro camino, la tele vuelve a Inicio. Las fuentes HDMI solo se respetan en Inicio y en el panel: el botón Fuente del mando no lo consulta.</p>
+    </section>
+
+    <!-- Ajustes -->
+    <section data-sec="ajustes" hidden>
+      <div class="head"><div><h1>Ajustes</h1><p>Aspecto, seguridad y diagnóstico.</p></div><span class="pill"><span class="dot" data-dot></span><span data-estado></span></span></div>
+      <div class="group" style="margin-top:0">
+        <h2>Aspecto</h2>
+        <div class="list">
+          <div class="row">
+            <span>Modo noche<span class="sub">Fondos oscurecidos en la pantalla de inicio. Apagado: modo día.</span></span>
+            <label class="switch neutral"><input type="checkbox" id="night"><span></span></label>
+          </div>
+        </div>
+      </div>
+      <div class="group">
+        <h2>Contraseña</h2>
+        <form class="form" id="pwForm">
+          <input type="password" id="pwActual" autocomplete="current-password" placeholder="Contraseña actual" aria-label="Contraseña actual">
+          <input type="password" id="pwNueva" autocomplete="new-password" placeholder="Nueva contraseña (mínimo 8)" aria-label="Nueva contraseña">
+          <button type="submit">Cambiar contraseña</button>
+          <span class="muted small">Al cambiarla se cierran las sesiones abiertas en otros aparatos.</span>
+        </form>
+      </div>
+      <div class="group">
+        <h2>Sesión</h2>
+        <button data-logout><svg class="i"><use href="#i-out"/></svg>Cerrar sesión</button>
+      </div>
+      <div class="group">
+        <h2>Diagnóstico</h2>
+        <div class="list"><details id="diag"><summary>Registro del servicio</summary><pre id="log">…</pre></details></div>
+        <p class="note" id="about"></p>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" id="tabs"></nav>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
 
 <script>
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var estado = null, offset = 0, apps = null;
+  var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+  var SECCIONES = [
+    ["resumen", "Resumen", "i-home"], ["mando", "Mando", "i-remote"], ["apps", "Apps", "i-grid"],
+    ["temporizador", "Temporizador", "i-clock"], ["parental", "Control parental", "i-lock"], ["ajustes", "Ajustes", "i-gear"]
+  ];
+  var CORTOS = { temporizador: "Temporiz.", parental: "Bloqueos" };
+  var estado = null, offset = 0, apps = null, online = false;
 
   function api(ruta, body) {
     var opts = { credentials: "same-origin", headers: { "X-TV": "1" } };
@@ -203,8 +452,8 @@ pre { white-space: pre-wrap; word-break: break-all; font-size: 11px; color: var(
       opts.body = JSON.stringify(body);
     }
     return fetch(ruta, opts).then(function (r) {
-      if (r.status === 401 && ruta !== "/api/login") { mostrarLogin(); throw new Error("sesion"); }
-      return r.json().then(function (j) { j._status = r.status; return j; });
+      if (r.status === 401 && ruta !== "/api/login" && ruta !== "/api/password") { mostrarLogin(false); throw new Error("sesion"); }
+      return r.json().catch(function () { return {}; }).then(function (j) { j._status = r.status; return j; });
     });
   }
   var toastTimer;
@@ -212,7 +461,7 @@ pre { white-space: pre-wrap; word-break: break-all; font-size: 11px; color: var(
     $("toast").textContent = t;
     $("toast").classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(function () { $("toast").classList.remove("show"); }, 2500);
+    toastTimer = setTimeout(function () { $("toast").classList.remove("show"); }, 2600);
   }
   function motivo(r, nombre) {
     if (r.ok) return null;
@@ -221,106 +470,177 @@ pre { white-space: pre-wrap; word-break: break-all; font-size: 11px; color: var(
       "sin-permiso": "La tele no ha dado permiso a «Inicio TV»: acéptalo en la tele",
       "sin-respuesta": "Acepta el aviso «Inicio TV» en la tele",
       "sin-configurar": nombre + " aún no está configurado"
-    }[r.motivo] || ("No se ha podido: " + (r.motivo || "error"));
+    }[r.motivo] || ("No se ha podido (" + (r.motivo || "error") + ")");
   }
+
+  // ---------- Navegación ----------
+  function pintarNav() {
+    var nav = "", tabs = "";
+    SECCIONES.forEach(function (s) {
+      var icon = '<svg class="i"><use href="#' + s[2] + '"/></svg>';
+      nav += '<a href="#' + s[0] + '" data-go="' + s[0] + '">' + icon + s[1] + "</a>";
+      tabs += '<a href="#' + s[0] + '" data-go="' + s[0] + '">' + icon + (CORTOS[s[0]] || s[1]) + "</a>";
+    });
+    $("nav").innerHTML = nav;
+    $("tabs").innerHTML = tabs;
+  }
+  function irA() {
+    var id = (location.hash || "#resumen").slice(1);
+    if (!SECCIONES.some(function (s) { return s[0] === id; })) id = "resumen";
+    all("[data-sec]").forEach(function (s) { s.hidden = s.getAttribute("data-sec") !== id; });
+    all("[data-go]").forEach(function (a) { a.classList.toggle("on", a.getAttribute("data-go") === id); });
+    window.scrollTo(0, 0);
+    if (id === "ajustes" && $("diag").open) cargarLog();
+  }
+  window.addEventListener("hashchange", irA);
 
   // ---------- Sesión ----------
   var modoSetup = false;
   function mostrarLogin(setup) {
     modoSetup = !!setup;
-    $("app").hidden = true;
-    $("login").hidden = false;
-    $("loginMsg").textContent = setup ? "Primera vez: elige la contraseña del panel (mínimo 8 caracteres)." : "Inicia sesión para manejar la tele.";
+    $("appView").hidden = true;
+    $("loginView").hidden = false;
+    $("loginTitle").textContent = setup ? "Primera vez" : "Iniciar sesión";
+    $("loginMsg").textContent = setup ? "Elige la contraseña del panel (mínimo 8 caracteres)." : "Panel de control de la tele.";
     $("loginBtn").textContent = setup ? "Guardar contraseña" : "Entrar";
     $("pass").autocomplete = setup ? "new-password" : "current-password";
     if (location.pathname !== "/login") history.replaceState(null, "", "/login");
+    $("pass").focus();
   }
   function mostrarApp() {
-    $("login").hidden = true;
-    $("app").hidden = false;
-    if (location.pathname !== "/gestion" && location.pathname !== "/management") history.replaceState(null, "", "/gestion");
+    $("loginView").hidden = true;
+    $("appView").hidden = false;
+    if (location.pathname !== "/gestion" && location.pathname !== "/management") history.replaceState(null, "", "/gestion" + location.hash);
+    irA();
     cargarApps();
     refrescar();
   }
   $("login").addEventListener("submit", function (e) {
     e.preventDefault();
     $("loginErr").textContent = "";
-    var ruta = modoSetup ? "/api/setup" : "/api/login";
-    api(ruta, { user: $("user").value, pass: $("pass").value }).then(function (r) {
+    api(modoSetup ? "/api/setup" : "/api/login", { user: $("user").value, pass: $("pass").value }).then(function (r) {
       if (r.ok) { $("pass").value = ""; mostrarApp(); return; }
       $("loginErr").textContent = r._status === 429 ? "Demasiados intentos. Espera 5 minutos." :
         r.motivo === "corta" ? "Mínimo 8 caracteres." : "Usuario o contraseña incorrectos.";
     }).catch(function () { $("loginErr").textContent = "La tele no responde."; });
   });
-  $("logout").addEventListener("click", function () {
-    api("/api/logout", {}).then(function () { mostrarLogin(false); }).catch(function () {});
+  all("[data-logout]").forEach(function (b) {
+    b.addEventListener("click", function () { api("/api/logout", {}).then(function () { mostrarLogin(false); }).catch(function () {}); });
   });
 
   // ---------- Estado ----------
-  function mb(b) { return b >= 1073741824 ? (b / 1073741824).toFixed(1) + " GB" : Math.round(b / 1048576) + " MB"; }
+  function mb(b) { return b >= 1073741824 ? (b / 1073741824).toFixed(1).replace(".", ",") + " GB" : Math.round(b / 1048576) + " MB"; }
   function hhmm(ms) { var d = new Date(ms); return ("0" + d.getHours()).slice(-2) + ":" + ("0" + d.getMinutes()).slice(-2); }
+  function duracion(ms) {
+    var s = Math.max(0, Math.ceil(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    if (h) return h + " h " + ("0" + m).slice(-2) + " min";
+    if (m) return m + " min";
+    return s + " s";
+  }
+  function pintarConexion() {
+    all("[data-dot]").forEach(function (d) { d.className = "dot" + (online ? "" : " off"); });
+    all("[data-estado]").forEach(function (s) { s.textContent = online ? "Encendida" : "No responde"; });
+  }
   function pintar() {
+    pintarConexion();
     if (!estado) return;
-    $("dot").className = "dot";
-    $("estado").textContent = "Encendida";
-    $("version").textContent = "v" + estado.version;
-    $("espacio").textContent = estado.storage ? mb(estado.storage.free) + " de " + mb(estado.storage.total) : "—";
-    $("mando").textContent = { ok: "Conectado", "sin-permiso": "Sin permiso (acéptalo en la tele)", desconectado: "Listo", conectando: "Conectando…", "sin-respuesta": "Esperando permiso" }[estado.mando] || estado.mando;
-    $("running").textContent = (estado.running || []).map(function (a) { return a.name; }).join(", ");
-    $("modo").textContent = estado.night ? "Cambiar a día" : "Cambiar a noche";
+    $("cEstado").textContent = online ? "Encendida" : "No responde";
+    $("cVersion").textContent = "Inicio v" + estado.version + " · mando: " + ({ ok: "conectado", "sin-permiso": "sin permiso", desconectado: "listo", conectando: "conectando", "sin-respuesta": "esperando permiso" }[estado.mando] || estado.mando);
+    if (estado.storage) {
+      $("cEspacio").textContent = mb(estado.storage.free);
+      $("cBarra").style.width = Math.round(100 * (1 - estado.storage.free / estado.storage.total)) + "%";
+      $("cBarra").title = mb(estado.storage.free) + " libres de " + mb(estado.storage.total);
+    }
+    $("cModo").textContent = estado.night ? "Noche" : "Día";
+    $("night").checked = !!estado.night;
+    var conocidas = {};
+    if (apps) apps.apps.forEach(function (a) { conocidas[a.id] = a.name; });
+    conocidas["org.tizen.tv-viewer"] = "TV";
+    var vistas = [];
+    (estado.running || []).forEach(function (a) {
+      var n = a.name.indexOf("TizenBrew") === 0 ? "Inicio" : conocidas[a.id];
+      if (n && vistas.indexOf(n) < 0) vistas.push(n);
+    });
+    $("cRunning").textContent = vistas.join(" · ") || "—";
     var t = estado.timer;
     if (t) {
-      var falta = Math.max(0, t.end - (Date.now() + offset));
-      var m = Math.ceil(falta / 60000);
-      $("tLeft").textContent = "Se apagará a las " + hhmm(t.end - offset) + " (faltan " + Math.floor(m / 60) + " h " + (m % 60) + " min)" + (t.notify ? "" : " · sin aviso");
-    } else $("tLeft").textContent = "";
-    if (apps) pintarBloqueos();
+      var falta = t.end - (Date.now() + offset);
+      $("cTimer").textContent = duracion(falta);
+      $("cTimerSub").textContent = "Se apaga a las " + hhmm(t.end - offset) + (t.notify ? "" : " · sin aviso");
+      $("tCount").textContent = duracion(falta);
+      $("tSub").textContent = "Se apagará a las " + hhmm(t.end - offset) + (t.notify ? " · con aviso en la tele" : " · sin aviso");
+      $("tCancelWrap").hidden = false;
+    } else {
+      $("cTimer").textContent = "Sin temporizador";
+      $("cTimerSub").textContent = "";
+      $("tCount").textContent = "Sin temporizador";
+      $("tSub").textContent = "Elige un tiempo abajo.";
+      $("tCancelWrap").hidden = true;
+    }
+    pintarBloqueos();
+    $("about").textContent = "Inicio v" + estado.version + " · código en github.com/m4r10-tech/tv-inicio";
   }
   function refrescar() {
     api("/api/estado").then(function (e) {
-      estado = e;
+      estado = e; online = true;
       offset = e.hora - Date.now();
       pintar();
     }).catch(function (err) {
       if (err.message === "sesion") return;
-      $("dot").className = "dot off";
-      $("estado").textContent = "No responde (¿apagada?)";
+      online = false;
+      pintar();
     });
   }
-  setInterval(function () { if (!document.hidden && !$("app").hidden) refrescar(); }, 3000);
+  setInterval(function () { if (!document.hidden && !$("appView").hidden) refrescar(); }, 3000);
+  setInterval(function () { if (estado && estado.timer && !$("appView").hidden) pintar(); }, 1000);
 
   // ---------- Acciones ----------
-  var confirmando = null;
-  $("apagar").addEventListener("click", function () {
-    if (!confirmando) {
-      $("apagar").textContent = "¿Seguro? Toca otra vez";
-      confirmando = setTimeout(function () { confirmando = null; $("apagar").textContent = "Apagar"; }, 3000);
-      return;
-    }
-    clearTimeout(confirmando); confirmando = null;
-    $("apagar").textContent = "Apagar";
-    api("/api/apagar", {}).then(function (r) { toast(motivo(r, "") || "Apagando"); }).catch(function () {});
-  });
-  $("modo").addEventListener("click", function () {
-    var night = estado ? !estado.night : false;
-    api("/api/modo", { night: night }).then(function () { if (estado) { estado.night = night; pintar(); } }).catch(function () {});
-  });
-  document.querySelectorAll("[data-key]").forEach(function (b) {
+  all("[data-power]").forEach(function (b) {
+    var label = b.querySelector("span"), espera = null;
     b.addEventListener("click", function () {
+      if (!espera) {
+        label.textContent = "¿Seguro? Otra vez";
+        espera = setTimeout(function () { espera = null; label.textContent = "Apagar"; }, 3000);
+        return;
+      }
+      clearTimeout(espera); espera = null; label.textContent = "Apagar";
+      api("/api/apagar", {}).then(function (r) { toast(motivo(r, "") || "Apagando la tele"); }).catch(function () {});
+    });
+  });
+  all("[data-key]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      if (navigator.vibrate) navigator.vibrate(10);
       api("/api/tecla", { key: b.getAttribute("data-key") }).then(function (r) { var m = motivo(r, ""); if (m) toast(m); }).catch(function () {});
     });
   });
   function abrir(id, nombre) {
     api("/api/abrir", { id: id }).then(function (r) { toast(motivo(r, nombre) || "Abriendo " + nombre); }).catch(function () {});
   }
-  document.querySelectorAll("[data-open]").forEach(function (b) {
-    b.addEventListener("click", function () { abrir(b.getAttribute("data-open"), b.textContent); });
-  });
-  $("abrirOtra").addEventListener("click", function () {
-    var s = $("otraApp");
-    if (s.value) abrir(s.value, s.options[s.selectedIndex].textContent);
+  function enlazarAbrir(root) {
+    Array.prototype.slice.call(root.querySelectorAll("[data-open]")).forEach(function (b) {
+      if (b._ok) return;
+      b._ok = true;
+      b.addEventListener("click", function () { abrir(b.getAttribute("data-open"), b.textContent.trim()); });
+    });
+  }
+  enlazarAbrir(document);
+  $("night").addEventListener("change", function () {
+    var night = $("night").checked;
+    api("/api/modo", { night: night }).then(function () { if (estado) { estado.night = night; pintar(); } toast(night ? "Modo noche" : "Modo día"); }).catch(function () {});
   });
 
+  // Temporizador
+  all("#presets [data-min]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var m = Number(b.getAttribute("data-min"));
+      $("tH").value = Math.floor(m / 60);
+      $("tM").value = m % 60;
+      all("#presets [data-min]").forEach(function (x) { x.classList.toggle("on", x === b); });
+    });
+  });
+  ["tH", "tM"].forEach(function (id) {
+    $(id).addEventListener("input", function () { all("#presets [data-min]").forEach(function (x) { x.classList.remove("on"); }); });
+  });
   $("tStart").addEventListener("click", function () {
     var min = (parseInt($("tH").value, 10) || 0) * 60 + (parseInt($("tM").value, 10) || 0);
     if (min <= 0) { toast("Pon al menos 1 minuto"); return; }
@@ -333,49 +653,64 @@ pre { white-space: pre-wrap; word-break: break-all; font-size: 11px; color: var(
     api("/api/temporizador/cancelar", {}).then(function () { toast("Temporizador cancelado"); refrescar(); }).catch(function () {});
   });
 
-  // ---------- Apps y control parental ----------
+  // Contraseña
+  $("pwForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    api("/api/password", { actual: $("pwActual").value, nueva: $("pwNueva").value }).then(function (r) {
+      if (r.ok) { $("pwActual").value = ""; $("pwNueva").value = ""; toast("Contraseña cambiada"); return; }
+      toast(r._status === 404 ? "Disponible tras reiniciar la tele" : r.motivo === "actual" ? "La contraseña actual no es correcta" :
+        r.motivo === "corta" ? "Mínimo 8 caracteres" : "No se ha podido cambiar");
+    }).catch(function () {});
+  });
+
+  // ---------- Apps y bloqueos ----------
+  function filaBloqueo(a) {
+    var row = document.createElement("div");
+    row.className = "row";
+    row.innerHTML = '<span></span><label class="switch"><input type="checkbox"><span></span></label>';
+    row.firstChild.textContent = a.name;
+    var input = row.querySelector("input");
+    input.setAttribute("data-lock", a.id);
+    input.setAttribute("aria-label", "Bloquear " + a.name);
+    input.addEventListener("change", function () {
+      api("/api/bloqueo", { id: a.id, on: input.checked }).then(function () {
+        toast(a.name + (input.checked ? " bloqueado" : " desbloqueado"));
+        refrescar();
+      }).catch(function () {});
+    });
+    return row;
+  }
   function cargarApps() {
     api("/api/apps").then(function (r) {
       apps = r;
-      var s = $("otraApp");
-      s.innerHTML = "";
+      $("lockFuentes").innerHTML = ""; $("lockApps").innerHTML = ""; $("todas").innerHTML = "";
+      r.fuentes.forEach(function (a) { $("lockFuentes").appendChild(filaBloqueo(a)); });
       r.apps.forEach(function (a) {
-        var o = document.createElement("option");
-        o.value = a.id; o.textContent = a.name;
-        s.appendChild(o);
+        $("lockApps").appendChild(filaBloqueo(a));
+        var b = document.createElement("button");
+        b.className = "tile";
+        b.setAttribute("data-open", a.id);
+        b.innerHTML = '<span></span><span class="lk"><svg><use href="#i-lockf"/></svg></span>';
+        b.firstChild.textContent = a.name;
+        $("todas").appendChild(b);
       });
-      var locks = $("locks");
-      locks.innerHTML = "";
-      r.fuentes.concat(r.apps).forEach(function (a) {
-        var row = document.createElement("div");
-        row.className = "toggle";
-        row.innerHTML = '<span></span><label class="switch"><input type="checkbox"><span></span></label>';
-        row.firstChild.textContent = a.name;
-        var input = row.querySelector("input");
-        input.setAttribute("data-lock", a.id);
-        input.setAttribute("aria-label", "Bloquear " + a.name);
-        input.addEventListener("change", function () {
-          api("/api/bloqueo", { id: a.id, on: input.checked }).then(function () {
-            toast(a.name + (input.checked ? " bloqueado" : " desbloqueado"));
-            refrescar();
-          }).catch(function () {});
-        });
-        locks.appendChild(row);
-      });
+      enlazarAbrir($("todas"));
       pintarBloqueos();
     }).catch(function () {});
   }
   function pintarBloqueos() {
     var b = (estado && estado.blocked) || {};
-    document.querySelectorAll("[data-lock]").forEach(function (i) { i.checked = !!b[i.getAttribute("data-lock")]; });
+    all("[data-lock]").forEach(function (i) { i.checked = !!b[i.getAttribute("data-lock")]; });
+    all(".tile[data-open]").forEach(function (t) { t.classList.toggle("locked", !!b[t.getAttribute("data-open")]); });
   }
 
-  $("diag").addEventListener("toggle", function () {
-    if (!$("diag").open) return;
-    api("/api/log").then(function (l) { $("log").textContent = l.slice(-120).reverse().join("\n"); }).catch(function () {});
-  });
+  function cargarLog() {
+    api("/api/log").then(function (l) { $("log").textContent = l.slice(-150).reverse().join("\n"); }).catch(function () {});
+  }
+  $("diag").addEventListener("toggle", function () { if ($("diag").open) cargarLog(); });
 
   // ---------- Arranque ----------
+  pintarNav();
   fetch("/api/sesion", { credentials: "same-origin" }).then(function (r) { return r.json(); }).then(function (s) {
     if (s.logged) mostrarApp(); else mostrarLogin(s.setup);
   }).catch(function () { mostrarLogin(false); $("loginErr").textContent = "La tele no responde."; });
