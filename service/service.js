@@ -18,7 +18,7 @@
   var crypto = require('crypto');
 
   var VERSION = '0.1.0';
-  var MODULE = 'gh/m4r10-tech/tv-inicio@main';
+  var MODULE = nombreModulo();
   var PORT = 8090;
   var CONFIG_FILE = '/home/owner/share/tv-inicio.json';
   var PKG = tizen.application.getAppInfo().packageId;
@@ -45,6 +45,16 @@
     'KEY_VOLUP', 'KEY_VOLDOWN', 'KEY_MUTE', 'KEY_CHUP', 'KEY_CHDOWN', 'KEY_SOURCE', 'KEY_MENU',
     'KEY_PLAY', 'KEY_PAUSE', 'KEY_STOP', 'KEY_FF', 'KEY_REWIND', 'KEY_POWER', 'KEY_TV',
     'KEY_HDMI1', 'KEY_HDMI2', 'KEY_HDMI3', 'KEY_INFO', 'KEY_EXIT'];
+
+  // Nombre con el que se añadió el módulo en TizenBrew (p. ej. gh/m4r10-tech/tv-inicio@main).
+  function nombreModulo() {
+    try {
+      var tb = JSON.parse(fs.readFileSync('/home/owner/share/tizenbrewConfig.json', 'utf8'));
+      var mio = (tb.modules || []).filter(function (m) { return m.indexOf('m4r10-tech/tv-inicio') >= 0; })[0];
+      if (mio) return mio;
+    } catch (e) { /* sin configuración de TizenBrew */ }
+    return 'gh/m4r10-tech/tv-inicio@main';
+  }
 
   // ---------- Registro (se ve en el panel, Diagnóstico) ----------
   var logs = [];
@@ -610,7 +620,7 @@
   // ---------- Arranque ----------
   loadConfig();
   if (config.timer && config.timer.end < Date.now()) { config.timer = null; saveConfig(); }
-  server.listen(PORT, '0.0.0.0', function () { log('tv-inicio ' + VERSION + ' escuchando en :' + PORT); });
+  server.listen(PORT, '0.0.0.0', function () { log('tv-inicio ' + VERSION + ' (' + MODULE + ') escuchando en :' + PORT); });
   cargarPanel();
   setInterval(cargarPanel, 30 * 60000);
   leerApps();
