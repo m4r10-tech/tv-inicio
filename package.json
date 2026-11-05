@@ -1,0 +1,24 @@
+{
+  "name": "tv-inicio",
+  "appName": "Inicio",
+  "version": "0.1.0",
+  "description": "Pantalla de inicio y panel de control web para una Samsung con Tizen 4, como módulo de TizenBrew.",
+  "packageType": "app",
+  "appPath": "app/index.html",
+  "serviceFile": "service/service.js",
+  "keys": [
+    "ColorF0Red",
+    "ColorF1Green",
+    "ColorF2Yellow",
+    "ColorF3Blue",
+    "MediaPlayPause",
+    "MediaPlay",
+    "MediaPause",
+    "MediaStop",
+    "MediaFastForward",
+    "MediaRewind",
+    "MediaTrackNext",
+    "MediaTrackPrevious"
+  ],
+  "license": "MIT"
+}

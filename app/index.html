@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920">
+<title>Inicio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-gear" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.7 7.7 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.7 7.7 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.7 7.7 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.7 7.7 0 0 0 2.6-1.5l2.4 1 2-3.4-2-1.6Z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5Z"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+  <symbol id="i-hdmi" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M2.5 8h19v5l-3 3h-13l-3-3V8Z"/><path stroke="currentColor" stroke-width="1.8" d="M7 11h10"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="2.4" d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-antenna" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M8 3l4 5 4-5"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.5"/><rect x="14" y="3.5" width="6.5" height="6.5" rx="1.5"/><rect x="3.5" y="14" width="6.5" height="6.5" rx="1.5"/><rect x="14" y="14" width="6.5" height="6.5" rx="1.5"/></g></symbol>
+  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/><path fill="none" stroke="currentColor" stroke-width="1.6" d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></symbol>
+</svg>
+
+<div class="screen" id="screen">
+  <div class="bg" id="bgA"></div>
+  <div class="bg" id="bgB"></div>
+  <div class="shade"></div>
+
+  <div class="top">
+    <div class="chip" data-f data-id="hdmi1"><svg><use xlink:href="#i-hdmi"/></svg>Consola<span class="lock"><svg><use xlink:href="#i-lock"/></svg></span></div>
+    <div class="chip" data-f data-id="hdmi2"><svg><use xlink:href="#i-hdmi"/></svg>HDMI 2<span class="lock"><svg><use xlink:href="#i-lock"/></svg></span></div>
+    <div class="chip" data-f data-id="hdmi3"><svg><use xlink:href="#i-hdmi"/></svg>HDMI 3<span class="lock"><svg><use xlink:href="#i-lock"/></svg></span></div>
+    <div class="chip icon" data-f data-action="modo"><svg id="modeIcon"><use xlink:href="#i-sun"/></svg></div>
+    <div class="chip icon" data-f data-id="ajustes"><svg><use xlink:href="#i-gear"/></svg></div>
+  </div>
+
+  <div class="center">
+    <div class="time" id="time"></div>
+    <div class="date" id="date"></div>
+  </div>
+
+  <div class="tiles">
+    <div class="tile" data-f data-id="youtube">
+      <div class="logo"><svg viewBox="0 0 90 64"><rect width="90" height="64" rx="16" fill="#ff0000"/><path d="M36 19v26l22-13z" fill="#fff"/></svg></div>YouTube
+      <span class="lock"><svg><use xlink:href="#i-lock"/></svg></span>
+    </div>
+    <div class="tile" data-f data-id="11101200001">
+      <div class="logo"><svg viewBox="0 0 40 64"><path d="M4 2h9l14 38V2h9v60h-9L13 24v38H4z" fill="#e50914"/></svg></div>Netflix
+      <span class="lock"><svg><use xlink:href="#i-lock"/></svg></span>
+    </div>
+    <div class="tile" data-f data-id="3201512006785">
+      <div class="logo"><svg viewBox="0 0 120 64"><text x="60" y="40" text-anchor="middle" font-family="IBM Plex Sans, sans-serif" font-weight="600" font-size="34" fill="#1a98ff">prime</text><path d="M30 50q30 12 60 0" fill="none" stroke="#1a98ff" stroke-width="4" stroke-linecap="round"/></svg></div>Prime Video
+      <span class="lock"><svg><use xlink:href="#i-lock"/></svg></span>
+    </div>
+    <div class="tile" data-f data-id="tv">
+      <div class="logo"><svg viewBox="0 0 24 24" class="glyph"><use xlink:href="#i-antenna"/></svg></div>TV
+      <span class="lock"><svg><use xlink:href="#i-lock"/></svg></span>
+    </div>
+    <div class="tile" data-f data-id="jellyfin">
+      <div class="logo"><svg viewBox="0 0 64 64"><path d="M32 6 6 54h52z" fill="none" stroke="#00a4dc" stroke-width="6" stroke-linejoin="round"/><path d="M32 28 22 46h20z" fill="#00a4dc"/></svg></div>Jellyfin
+      <span class="lock"><svg><use xlink:href="#i-lock"/></svg></span>
+    </div>
+    <div class="tile" data-f data-id="org.tizen.browser">
+      <div class="logo"><svg viewBox="0 0 24 24" class="glyph"><use xlink:href="#i-globe"/></svg></div>Navegador
+      <span class="lock"><svg><use xlink:href="#i-lock"/></svg></span>
+    </div>
+    <div class="tile" data-f data-action="apps">
+      <div class="logo"><svg viewBox="0 0 24 24" class="glyph"><use xlink:href="#i-grid"/></svg></div>Apps
+    </div>
+  </div>
+
+  <div class="credit" id="credit"></div>
+  <div class="hint" id="hint">Botón rojo: cursor</div>
+
+  <div class="allapps" id="allapps">
+    <div class="allapps-head"><h2>Todas las apps</h2><span>Atrás para volver</span></div>
+    <div class="agrid" id="agrid"></div>
+  </div>
+
+  <div class="warn" id="warn">
+    <div class="warn-box">
+      <svg><use xlink:href="#i-clock"/></svg>
+      <div class="warn-text">La tele se apagará en <b id="warnSecs">60</b> s</div>
+      <div class="warn-actions">
+        <div class="wbtn" data-f data-action="mas">15 minutos más</div>
+        <div class="wbtn" data-f data-action="cerrar">Vale</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"><svg><use xlink:href="#i-clock"/></svg><span id="toastText"></span></div>
+
+  <svg class="cursor" id="cursor" viewBox="0 0 24 24"><path d="M4 2.5v17l4.6-4.3 3 6.6 3-1.4-3-6.4H18L4 2.5Z" fill="#fff" stroke="#111" stroke-width="1.3" stroke-linejoin="round"/></svg>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
