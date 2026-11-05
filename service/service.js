@@ -17,7 +17,7 @@
   var fs = require('fs');
   var crypto = require('crypto');
 
-  var VERSION = '0.2.0';
+  var VERSION = '0.3.0';
   var MODULE = nombreModulo();
   var PORT = 8090;
   var CONFIG_FILE = '/home/owner/share/tv-inicio.json';
@@ -328,11 +328,32 @@
     lanzar(id, cb);
   }
 
-  // ---------- Temporizador ----------
+  // ---------- Apagar ----------
+  // Antes de apagar se trae Inicio al frente: con «Ejecutar automáticamente la última aplicación»
+  // activado, la tele vuelve a abrir Inicio al encenderse.
   function apagar(cb) {
     log('apagando la tele');
-    tecla('KEY_POWER', cb);
+    if (!tbEnMarcha()) return tecla('KEY_POWER', cb);
+    traerInicio(function () {
+      setTimeout(function () { tecla('KEY_POWER', cb); }, 2500);
+    });
   }
+
+  // Que TizenBrew abra siempre Inicio al arrancar (AutoLaunch), sin pasar por su lista de módulos.
+  function asegurarAutoLaunch() {
+    var f = '/home/owner/share/tizenbrewConfig.json';
+    try {
+      var tb = JSON.parse(fs.readFileSync(f, 'utf8'));
+      if ((tb.modules || []).indexOf(MODULE) < 0 || tb.autoLaunchModule === MODULE) return;
+      log('AutoLaunch de TizenBrew:', tb.autoLaunchModule || '(ninguno)', '->', MODULE);
+      tb.autoLaunchModule = MODULE;
+      fs.writeFileSync(f, JSON.stringify(tb, null, 4));
+    } catch (e) {
+      log('AutoLaunch: no se pudo revisar:', e.message);
+    }
+  }
+
+  // ---------- Temporizador ----------
   function revisarTemporizador() {
     var t = config.timer;
     if (!t) return;
@@ -631,6 +652,7 @@
 
   // ---------- Arranque ----------
   loadConfig();
+  asegurarAutoLaunch();
   if (config.timer && config.timer.end < Date.now()) { config.timer = null; saveConfig(); }
   server.listen(PORT, '0.0.0.0', function () { log('tv-inicio ' + VERSION + ' (' + MODULE + ') escuchando en :' + PORT); });
   cargarPanel();

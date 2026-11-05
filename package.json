@@ -1,7 +1,7 @@
 {
   "name": "tv-inicio",
   "appName": "Inicio",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Pantalla de inicio y panel de control web para una Samsung con Tizen 4, como módulo de TizenBrew.",
   "packageType": "app",
   "appPath": "app/index.html",
